@@ -142,6 +142,45 @@
               inset -2px -2px 5px rgba(255,255,255,0.5),
               inset 2px 2px 5px rgba(0,0,0,0.1);
 }
+/* للموبايل */
+@media (max-width: 600px) {
+  .clock {
+    font-size: 2em;
+    padding: 10px 20px;
+  }
+
+  .prayer-box {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+  }
+
+  .prayer-grid {
+    margin: 10px;
+  }
+
+  .next-prayer {
+    font-size: 1.2em;
+    padding: 10px;
+    width: 95%;
+  }
+}
+
+/* للتلفزيون أو الشاشات الكبيرة */
+@media (min-width: 1200px) {
+  .clock {
+    font-size: 7em;
+  }
+
+  .prayer-box {
+    font-size: 2.5em;
+    width: 200px;
+  }
+
+  .next-prayer {
+    font-size: 3em;
+  }
+}
 
 </style>
   <script src="times.js"></script>
@@ -159,7 +198,11 @@
 
   <div class="prayer-grid">
     <div class="row-1" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <div class="prayer-box Fajr">--:--<br>الفجر</div>
+      <div class="prayer-box Shurooq">
+  <div class="time">--:--</div>
+  <div class="name-ar">الشروق</div>
+  <div class="name-en">Shurooq</div>
+</div>
       <div class="clock" id="clock">--:--</div>
       <div class="prayer-box Shurooq">--:--<br>الشروق</div>
     </div>
@@ -569,7 +612,7 @@
       if (!times) return;
 
       const [fajr, shurooq, dhuhr, asr, maghrib, isha] = times.split(";");
-      document.querySelector(".Fajr").innerHTML = fajr + "<br>الفجر (Fajr)";
+      document.querySelector(".Fajr .time").innerText = fajr;
 document.querySelector(".Shurooq").innerHTML = shurooq + "<br>الشروق (Shurooq)";
 document.querySelector(".Dhuhr").innerHTML = dhuhr + "<br>الظهر (Dhuhr)";
 document.querySelector(".Asr").innerHTML = asr + "<br>العصر (Asr)";
