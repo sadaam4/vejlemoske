@@ -8,7 +8,7 @@
   <title>مواقيت الصلاة</title>
   <style>
     .blinking {
-  animation: blink 50s step-start infinite;
+  animation: blink 5s step-start infinite;
 }
 @keyframes blink {
   50% { opacity: 0; }
@@ -93,19 +93,6 @@
                   inset 2px 2px 5px rgba(0,0,0,0.1);
       transition: transform 0.2s ease;
     }
-    .prayer-box.Fajr,
-.prayer-box.Shurooq {
-  width: 200px;
-  font-size: 2.2em;
-}
-
-.prayer-box.Dhuhr,
-.prayer-box.Asr,
-.prayer-box.Maghrib,
-.prayer-box.Isha {
-  width: 200px;
-  font-size: 2.2em;
-}
     .prayer-box:hover {
       transform: scale(1.05);
     }
@@ -155,55 +142,18 @@
               inset -2px -2px 5px rgba(255,255,255,0.5),
               inset 2px 2px 5px rgba(0,0,0,0.1);
 }
-@media (max-width: 600px) {
-  .clock {
-    font-size: 2em;
-    padding: 10px 20px;
-  }
 
-  .prayer-box {
-    width: 100%;
-    margin-bottom: 10px;
-    font-size: 1.5em;
-  }
-
-  .prayer-grid {
-    margin: 10px;
-  }
-
-  .next-prayer {
-    font-size: 1.2em;
-    padding: 10px;
-    width: 95%;
-  }
-}
-
-/* للتلفزيون أو الشاشات الكبيرة */
-@media (min-width: 1200px) {
-  .clock {
-    font-size: 7em;
-  }
-
-  .prayer-box {
-    font-size: 2.5em;
-    width: 200px;
-  }
-
-  .next-prayer {
-    font-size: 3em;
-  }
-}
 </style>
   <script src="times.js"></script>
 </head>
 <body>
 
   <div class="top-bar">
-    <div class="date-en">Sunday 13. April 2025</div>
+    <div class="date-en" id="date-en"></div>
     <div class="logo-box">
       <img src="logo1.png" alt="Logo" class="top-logo" />
     </div>
-    <div class="date-ar">الأحد 14 شوال 1446</div>
+    <div class="date-ar" id="date-ar"></div>
   </div>
 
 
@@ -627,9 +577,8 @@
 document.querySelector(".Shurooq").innerHTML = shurooq + "<br>الشروق (Shurooq)";
 document.querySelector(".Dhuhr").innerHTML = dhuhr + "<br>الظهر (Dhuhr)";
 document.querySelector(".Asr").innerHTML = asr + "<br>العصر (Asr)";
-  document.querySelector(".Maghrib").innerHTML = maghrib + "<br>المغرب (Maghrib)";
-  document.querySelector(".Isha").innerHTML = isha + "<br>العشاء (Isha)";
-
+document.querySelector(".Maghrib").innerHTML = maghrib + "<br>المغرب (Maghrib)";
+document.querySelector(".Isha").innerHTML = isha + "<br>العشاء (Isha)";
 
       const now = new Date();
       const currentMinutes = now.getHours() * 60 + now.getMinutes();
@@ -688,6 +637,26 @@ function updatePrayerTimes() {
 }
 updatePrayerTimes();
 setInterval(updatePrayerTimes, 60000);
+</script>
+<script>
+  function updateDates() {
+    const daysEn = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const monthsEn = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const today = new Date();
+    const dayName = daysEn[today.getDay()];
+    const day = today.getDate();
+    const month = monthsEn[today.getMonth()];
+    const year = today.getFullYear();
+    document.getElementById("date-en").innerText = `${dayName} ${day}. ${month} ${year}`;
+
+    // التاريخ الهجري باستخدام Intl API
+    const hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+      day: 'numeric', month: 'long', year: 'numeric', weekday: 'long'
+    }).format(today);
+    document.getElementById("date-ar").innerText = hijriDate;
+  }
+
+  updateDates();
 </script>
 
 </body>
